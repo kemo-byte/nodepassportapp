@@ -1,5 +1,6 @@
 const bcrypt = require("bcryptjs");
 const express = require("express");
+const passport = require('passport')
 
 const router = express.Router();
 const User = require("../models/User");
@@ -10,7 +11,20 @@ router.get("/login", (req, res) => {
   res.render("login", { checked: checked }); // Render the EJS template and pass the checked value
 });
 // login handle
-router.post("/login", (req, res) => {});
+router.post("/login", (req, res, next) => {
+  passport.authenticate('local',{
+    successRedirect: '/dashboard',
+    failureRedirect: '/users/login',
+    failureFlash: true
+  })(req, res, next);
+});
+
+// router.post('/login', 
+//       passport.authenticate('local', { failureFlash: true,failureRedirect: '/users/login' }),
+//       function(req, res) {
+//         res.redirect('/dashboard');
+//     });
+
 // register page
 router.get("/register", (req, res) => {
   const checked = "true"; // true for register page
@@ -73,21 +87,27 @@ router.post("/register", (req, res) => {
           password,
         });
         //Hash password
-        bcrypt.genSalt(10,(err,salt)=>
-        bcrypt.hash(newUser.password,salt,(err,hash)=>{
-            if(err) throw err
+        bcrypt.genSalt(10, (err, salt) =>
+          bcrypt.hash(newUser.password, salt, (err, hash) => {
+            if (err) throw err
             // set password to hashed
             newUser.password = hash
             newUser.save()
-            .then(user=>{
-              req.flash('success_msg','You are registered and can login !')
+              .then(user => {
+                req.flash('success_msg', 'You are successfully registered !')
                 res.redirect('login')
-            })
-            .catch(err=>console.log(err))
-        })
+              })
+              .catch(err => console.log(err))
+          })
         )
       }
     });
   }
 });
+// Logout Handle 
+router.get('/logout', (req,res)=>{
+  req.logout()
+  req.flash('success_msg', 'You are logged out')
+  res.redirect('/users/login')
+})
 module.exports = router;

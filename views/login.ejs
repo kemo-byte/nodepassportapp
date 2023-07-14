@@ -15,6 +15,9 @@
     <% if(error_msg != ''){ %>
       <script>alertify.error('<%= error_msg %>')</script>
     <% } %>
+    <% if(error != ''){ %>
+      <script>alertify.error('<%= error%>')</script>
+    <% } %>
 
       <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
         <div class="container">
@@ -56,8 +59,8 @@
 
                         <div class="col-12">
                           <div class="input-group has-validation">
-                            <input type="email" placeholder="Email" name="loginemail" class="form-control" id="loginemail"
-                            value="<%= typeof loginemail != 'undefined' ? email : '' %>"
+                            <input type="email" placeholder="Email" name="email" class="form-control" id="loginemail"
+                            value="<%= typeof email != 'undefined' ? email : '' %>"
                             required>
                             <div class="invalid-feedback">Please enter your email.</div>
                           </div>
@@ -65,8 +68,8 @@
 
                         <div class="col-12">
                           <div class="input-group has-validation">
-                            <input type="password" placeholder="Password" name="loginpassword" class="form-control" id="loginpassword"
-                            value="<%= typeof loginpassword != 'undefined' ? password : '' %>"
+                            <input type="password" placeholder="Password" name="password" class="form-control" id="loginpassword"
+                            value="<%= typeof password != 'undefined' ? password : '' %>"
                             required>
                             <div class="invalid-feedback">Please enter your password.</div>
                           </div>
