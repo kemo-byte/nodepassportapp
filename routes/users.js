@@ -33,22 +33,22 @@ router.get("/register", (req, res) => {
 });
 // register handle
 router.post("/register", (req, res) => {
-  const { name, email, password, password2 } = req.body;
+  const { name, email1, password1, password2 } = req.body;
   let errors = [];
 
   // check if all field are empty
-  if (!name || !email || !password || !password2) {
+  if (!name || !email1 || !password1 || !password2) {
     errors.push({ msg: "all fields are required" });
   }
 
   // check password match
-  if (password != password2) {
+  if (password1 != password2) {
     errors.push({ msg: "password mismatch !" });
   }
 
   // check password length
 
-  if (password.length < 6) {
+  if (password1.length < 6) {
     errors.push({ msg: "password should be at lease 6 characters" });
   }
 
@@ -58,14 +58,14 @@ router.post("/register", (req, res) => {
     res.render("login", {
       errors,
       name,
-      email,
-      password,
+      email1,
+      password1,
       password2,
       checked,
     });
   } else {
     // validation passed
-    User.findOne({ email: email }).then((user) => {
+    User.findOne({ email: email1 }).then((user) => {
       if (user) {
         // user exists
         errors.push({ msg: "Email already registered !" });
@@ -75,16 +75,16 @@ router.post("/register", (req, res) => {
         res.render("login", {
           errors,
           name,
-          email,
-          password,
+          email1,
+          password1,
           password2,
           checked,
         });
       } else {
         const newUser = new User({
           name,
-          email,
-          password,
+          email:email1,
+          password:password1,
         });
         //Hash password
         bcrypt.genSalt(10, (err, salt) =>
@@ -106,8 +106,8 @@ router.post("/register", (req, res) => {
 });
 // Logout Handle 
 router.get('/logout', (req,res)=>{
-  req.logout()
-  req.flash('success_msg', 'You are logged out')
-  res.redirect('/users/login')
+  // req.logout();
+  req.flash('success_msg', 'You are logged out');
+  res.redirect('/users/login');
 })
 module.exports = router;

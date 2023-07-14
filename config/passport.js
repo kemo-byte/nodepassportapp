@@ -30,9 +30,10 @@ module.exports = function(passport) {
     passport.serializeUser(function(user, done) {
         done(null, user.id)
     })
-    passport.deserializeUser(function(id, done) {
-        User.findById(id).then(function(err, user) {
-            done(err, user)
-        })
+    passport.deserializeUser(async function(id, done) {
+
+       let user = await User.findById(id)
+            done( null,user)
+    
     })
 }
