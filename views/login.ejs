@@ -6,7 +6,15 @@
         <% errors.forEach(function(error) {%>
           <script> alertify.error('<%= error.msg %>')</script>
           <% })%>
-    <% } %>   
+    <% } %>  
+    
+    <% if(success_msg != ''){ %>
+      <script>alertify.success('<%= success_msg %>')</script>
+    <% } %>
+
+    <% if(error_msg != ''){ %>
+      <script>alertify.error('<%= error_msg %>')</script>
+    <% } %>
 
       <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
         <div class="container">
