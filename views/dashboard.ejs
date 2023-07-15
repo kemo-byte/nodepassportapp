@@ -1,6 +1,6 @@
 
 <body>
-
+   
     <main>
       <div class="container">
 
@@ -8,7 +8,20 @@
           <h1>Dashboard</h1>
           <h2>Welcome <%= name %></h2>
           <a class="btn btn1" href="/">Back to home</a>
-          <a class="btn btn-danger mt-3" href="/users/logout">Logout</a>
+          <a class="btn btn-danger mt-3 mb-3" href="/users/logout">Logout</a>
+
+          <form action="/users/upload" method="post" enctype="multipart/form-data">
+            <div class="row mb-3">
+              <div class="col-sm-10">
+                <input class="form-control" name="myImage" type="file" id="myImage">
+              </div>
+              <div class="col-sm-10 mt-2">
+                <button type="submit" class="btn btn-primary">Upload Image</button>
+              </div>
+            </div>
+  
+          </form>
+          
           <img src="assets/img/not-found.svg" class="img-fluid py-5" alt="Page Not Found">
           <div class="credits">
             <!-- All the links in the footer should remain intact. -->

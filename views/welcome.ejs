@@ -1,5 +1,13 @@
 <body>
+  <% if(typeof errors != 'undefined') {%>
+    <% errors.forEach(function(error) {%>
+      <script> alertify.error('<%= error.msg %>')</script>
+      <% })%>
+<% } %> 
 
+<% if(success_msg != 'undefined'){ %>
+  <script>alertify.success('<%= msg %>')</script>
+<% } %>
     <!-- ======= Header ======= -->
     <header id="header" class="header fixed-top d-flex align-items-center ">
   
@@ -23,7 +31,7 @@
   
       <div class="pagetitle">
         <h1>Welcome Page</h1>
-  
+        <img src="<%= typeof file != 'undefined' ? file :''%>" width="400" height="400" class="responsive-img"/>
       </div><!-- End Page Title -->
   
     </main><!-- End #main -->
