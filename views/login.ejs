@@ -3,7 +3,7 @@
       <!-- show errors  -->
 
       <% if(typeof errors != 'undefined') {%>
-        <% errors.forEach(function(error) {%>
+        <% errors.forEach((error)=> {%>
           <script> alertify.error('<%= error.msg %>')</script>
           <% })%>
     <% } %>  

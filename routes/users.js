@@ -11,7 +11,7 @@ const User = require("../models/User");
 // Set Storage Engine 
 const storage = multer.diskStorage({
   destination:'./public/uploads/',
-  filename: function(req, file, cb) {
+  filename: (req, file, cb) =>{
       cb(null, file.fieldname+'-'+Date.now()+ path.extname(file.originalname))
   }
 })
@@ -21,13 +21,13 @@ const storage = multer.diskStorage({
 const upload = multer({
   storage: storage,
   limits:{fileSize:4000000},
-  fileFilter: function(req, file, cb) {
+  fileFilter: (req, file, cb) =>{
     checkFileType(file, cb)
   }
 }).single('myImage')
 
 // check file type
-function checkFileType(file, cb) {
+let checkFileType = (file, cb) =>{
   // Allowed extensions
   const filetypes = /jpeg|jpg|png|gif/;
   // check extensions
@@ -57,11 +57,6 @@ router.post("/login", (req, res, next) => {
   })(req, res, next);
 });
 
-// router.post('/login', 
-//       passport.authenticate('local', { failureFlash: true,failureRedirect: '/users/login' }),
-//       function(req, res) {
-//         res.redirect('/dashboard');
-//     });
 
 // register page
 router.get("/register", (req, res) => {

@@ -17,11 +17,11 @@ require('./config/passport')(passport)
 
 const db = require('./config/keys').MongoURI
 
+const mdb = (async()=>{
 // connect to MongoDB 
-mongoose.connect(db,{useNewUrlParser:true})
-.then(()=>console.log('MongoDB connected...'))
-.catch((err)=>console.log(err))
+return  await mongoose.connect(db,{useNewUrlParser:true})
 
+})();
 // EJS
 
 app.use(expressLayouts)
