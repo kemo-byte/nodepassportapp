@@ -5,7 +5,7 @@
       <% })%>
 <% } %> 
 
-<% if(success_msg != 'undefined'){ %>
+<% if(success_msg != ''){ %>
   <script>alertify.success('<%= msg %>')</script>
 <% } %>
     <!-- ======= Header ======= -->
@@ -31,7 +31,9 @@
   
       <div class="pagetitle">
         <h1>Welcome Page</h1>
-        <img src="<%= typeof file != 'undefined' ? file :''%>" width="400" height="400" class="responsive-img"/>
+        <% if( typeof file != 'undefined') {  %>
+           <img src="<%= typeof file != 'undefined' ? file :''%>" width="400" height="400" class="responsive-img"/>
+        <% } %>
       </div><!-- End Page Title -->
   
     </main><!-- End #main -->
