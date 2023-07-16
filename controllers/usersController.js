@@ -20,7 +20,7 @@ const registerUser = (req, res) => {
     res.render("login", { checked: checked }); // Render the EJS template and pass the checked value
   }
 
-  const handleRegisterUser = (req, res) => {
+  const handleRegisterUser = async (req, res) => {
     const { name, email1, password1, password2 } = req.body;
     let errors = [];
   
@@ -52,8 +52,9 @@ const registerUser = (req, res) => {
         checked,
       });
     } else {
+      try {
       // validation passed
-      User.findOne({ email: email1 }).then((user) => {
+      let user = await User.findOne({ email: email1 })
         if (user) {
           // user exists
           errors.push({ msg: "Email already registered !" });
@@ -75,21 +76,22 @@ const registerUser = (req, res) => {
             password:password1,
           });
           //Hash password
-          bcrypt.genSalt(10, (err, salt) =>
-            bcrypt.hash(newUser.password, salt, (err, hash) => {
-              if (err) throw err
+          
+         let salt= await bcrypt.genSalt(10)
+            let hash = await bcrypt.hash(newUser.password, salt)
               // set password to hashed
               newUser.password = hash
-              newUser.save()
-                .then(user => {
-                  req.flash('success_msg', 'You are successfully registered !')
-                  res.redirect('login')
-                })
-                .catch(err => console.log(err))
-            })
-          )
+
+               let user = await newUser.save()
+               if(user){
+                req.flash('success_msg', `${user.name} registered successfully !`)
+                res.redirect('login')
+               }
+              
         }
-      });
+    }catch(err) {
+      console.log(err);
+    }
     }
   }
 
