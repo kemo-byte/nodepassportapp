@@ -5,4 +5,5 @@ nodejs login system app with ejs
 after clone the project , configure your monogDB server, then
 ``` 
 npm install
+npm run start
 ```
