@@ -15,15 +15,16 @@ const PORT = process.env.PORT || 5000
 require('./config/passport')(passport)
 // DB config 
 
-const db = require('./config/keys').MongoURI
+const db = require('./config/keys').MongoURI;
 
-const mdb = (async()=>{
+(async()=>{
 // connect to MongoDB 
+
 return  await mongoose.connect(db,{useNewUrlParser:true})
 
 })();
-// EJS
 
+// EJS
 app.use(expressLayouts)
 app.set('view engine','ejs')
 
