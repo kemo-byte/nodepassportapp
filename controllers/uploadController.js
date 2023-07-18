@@ -1,6 +1,6 @@
 const multer = require('multer')
 const path = require('path')
-
+const uploadModel = require('../models/Upload')
 
 // Set Storage Engine 
 const storage = multer.diskStorage({
@@ -38,23 +38,29 @@ const storage = multer.diskStorage({
 const uploadImage = (req, res)=>{
     let errors = [];
   
-    upload(req, res, (err)=>{
+    upload(req, res, async (err)=>{
       if(err) {
         errors.push({msg:err})
-        res.render('welcome',{
+        res.render('dashboard',{
           errors
         })
       } else {
         if(req.file == undefined) {
           errors.push({msg:"Error: No File Selected!"})
-        res.render('welcome',{
+        res.render('dashboard',{
           errors
         })
         } else {
-  
-          res.render('welcome',{
+
+          const uploaded = await uploadModel.create({
+            name:req.file.filename,
+            user:req.user.id
+        })
+          res.render('dashboard',{
             msg:"File Uploaded!",
-            file: `/uploads/${req.file.filename}`
+            file: `/uploads/${req.file.filename}`,
+            uploaded:uploaded,
+            name:req.user.name
           })
         }
       }
