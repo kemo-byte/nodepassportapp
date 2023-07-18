@@ -1,6 +1,14 @@
 
 <body>
-   
+  <% if(typeof errors != 'undefined') {%>
+    <% errors.forEach((error) =>{%>
+      <script> alertify.error('<%= error.msg %>')</script>
+      <% })%>
+<% } %> 
+
+<% if(success_msg != ''){ %>
+  <script>alertify.success('<%= msg %>')</script>
+<% } %>
     <main>
       <div class="container">
 
@@ -22,6 +30,10 @@
   
           </form>
           
+          <% if( typeof file != 'undefined') {  %>
+            <img src="<%= typeof file != 'undefined' ? file :''%>" width="400" height="400" class="responsive-img"/>
+         <% } %>
+
           <img src="assets/img/not-found.svg" class="img-fluid py-5" alt="Page Not Found">
           <div class="credits">
             <!-- All the links in the footer should remain intact. -->
