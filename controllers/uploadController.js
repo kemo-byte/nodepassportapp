@@ -52,15 +52,17 @@ const uploadImage = (req, res)=>{
         })
         } else {
 
-          const uploaded = await uploadModel.create({
+          await uploadModel.create({
             name:req.file.filename,
             user:req.user.id
         })
+        let query= {user:req.user.id},
+       photos = await uploadModel.find(query).sort({_id:-1})
           res.render('dashboard',{
             msg:"File Uploaded!",
             file: `/uploads/${req.file.filename}`,
-            uploaded:uploaded,
-            name:req.user.name
+            photos:photos,
+            user:req.user
           })
         }
       }

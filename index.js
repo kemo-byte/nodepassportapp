@@ -7,6 +7,7 @@ const passport = require('passport')
 
 
 const app = express()
+// eslint-disable-next-line no-undef
 const PORT = process.env.PORT || 5000
 
 
@@ -34,8 +35,8 @@ app.use(express.urlencoded({extended:false}))
 // Express Session
 app.use(session({
     secret:'secret',
-    resave:true,
-    saveUninitialized:true
+    resave:false,
+    saveUninitialized:false
 }))
 // passport middleware 
 app.use(passport.initialize())

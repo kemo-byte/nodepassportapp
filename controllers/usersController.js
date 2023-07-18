@@ -1,15 +1,13 @@
 const passport = require('passport')
 const bcrypt = require("bcryptjs");
 const User = require("../models/User");
-
+const uploadModel = require('../models/Upload')
 // @desc User login page
 // @route GET /users/login
 // @access Public
 
 const loginUser = (req, res) => {
-  if (req.isAuthenticated()) {
-    res.redirect('dashboard')
-  }
+  
     const checked = "false"; //  false for login page
   
     res.render("login", { checked: checked }); // Render the EJS template and pass the checked value
@@ -20,21 +18,36 @@ const loginUser = (req, res) => {
 // @route POST /users/login
 // @access Public
 const handleLoginUser = (req, res, next) => {
-    passport.authenticate('local',{
-      successRedirect: '/dashboard',
-      failureRedirect: '/users/login',
-      failureFlash: true
-    })(req, res, next);
+  passport.authenticate('local',  (err, user) => {
+  
+
+    if (!user) {
+      // Handle authentication failure
+      req.flash('error', 'Invalid username or password');
+      return res.redirect('/users/login');
+    }
+
+    req.logIn(user, async  (err) => {
+      if (err) {
+        // Handle error
+        return next(err);
+      }
+
+      let query= {user:user.id},
+       photos = await uploadModel.find(query).sort({_id:-1})
+      res.render('dashboard',{user,photos});
+    });
+
+    
+  })(req, res, next);
   }
 
 
 // @desc Register User Page
-// @route POST /users/register
+// @route GET /users/register
 // @access Public
 const registerUser = (req, res) => {
-  if (req.isAuthenticated()) {
-    res.redirect('/dashboard')
-  }
+  
     const checked = "true"; // true for register page
   
     res.render("login", { checked: checked }); // Render the EJS template and pass the checked value
@@ -122,9 +135,12 @@ const registerUser = (req, res) => {
 // @route POST /users/logout
 // @access Private
   const logoutUser =  (req,res)=>{
-    // req.logout();
-    req.flash('success_msg', 'You are logged out');
-    res.redirect('/users/login');
+    req.logout(()=>{
+      console.log('logged out ...');
+      req.flash('success_msg', 'You are logged out');
+      res.redirect('/users/login');
+    });
+  
   }
 module.exports = {
     loginUser,
