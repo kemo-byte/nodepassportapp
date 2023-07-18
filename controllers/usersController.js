@@ -2,11 +2,23 @@ const passport = require('passport')
 const bcrypt = require("bcryptjs");
 const User = require("../models/User");
 
+// @desc User login page
+// @route GET /users/login
+// @access Public
+
 const loginUser = (req, res) => {
+  if (req.isAuthenticated()) {
+    res.redirect('dashboard')
+  }
     const checked = "false"; //  false for login page
   
     res.render("login", { checked: checked }); // Render the EJS template and pass the checked value
   }
+  
+
+// @desc login a user if authenticated
+// @route POST /users/login
+// @access Public
 const handleLoginUser = (req, res, next) => {
     passport.authenticate('local',{
       successRedirect: '/dashboard',
@@ -14,12 +26,23 @@ const handleLoginUser = (req, res, next) => {
       failureFlash: true
     })(req, res, next);
   }
+
+
+// @desc Register User Page
+// @route POST /users/register
+// @access Public
 const registerUser = (req, res) => {
+  if (req.isAuthenticated()) {
+    res.redirect('/dashboard')
+  }
     const checked = "true"; // true for register page
   
     res.render("login", { checked: checked }); // Render the EJS template and pass the checked value
   }
 
+// @desc Register a new user
+// @route POST /users/register
+// @access Public
   const handleRegisterUser = async (req, res) => {
     const { name, email1, password1, password2 } = req.body;
     let errors = [];
@@ -95,6 +118,9 @@ const registerUser = (req, res) => {
     }
   }
 
+// @desc Logout User
+// @route POST /users/logout
+// @access Private
   const logoutUser =  (req,res)=>{
     // req.logout();
     req.flash('success_msg', 'You are logged out');
