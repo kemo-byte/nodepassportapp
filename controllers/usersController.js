@@ -35,7 +35,12 @@ const handleLoginUser = (req, res, next) => {
 
       let query= {user:user.id},
        photos = await uploadModel.find(query).sort({_id:-1})
-      res.render('dashboard',{user,photos});
+       req.session.user = user
+       req.session.photos = photos
+       req.flash('success_msg', `Welcome back ${user.name} !`)
+
+
+      res.redirect('/dashboard')
     });
 
     

@@ -4,7 +4,7 @@ const {redirectIfAuthenticated} = require("../middlewares/redirectIfAuthenticate
 
 const router = express.Router();
 const {loginUser, handleLoginUser, registerUser, handleRegisterUser, logoutUser} = require('../controllers/usersController')
-const {uploadImage} = require('../controllers/uploadController')
+const {uploadImage,removeImage} = require('../controllers/uploadController')
 
 
 
@@ -24,6 +24,9 @@ router.post("/register", handleRegisterUser);
 // upload handle
 
 router.post('/upload',uploadImage)
+// remove upload
+
+router.post('/upload/remove',removeImage)
 // Logout Handle 
 router.get('/logout',logoutUser)
 

@@ -34,9 +34,15 @@
         <div class="row">
           <% if( typeof photos != 'undefined') {  %>
             <% photos.forEach((photo) =>{%>
-
-            <img src="/uploads/<%= typeof photo.name != 'undefined' ? photo.name :''%>"  height="300" class="responsive-img float-right mb-2"/>
-         <% }) %>
+            <div class="col-6">
+            <img src="/uploads/<%= typeof photo.name != 'undefined' ? photo.name :''%>" style="width:100%;" class="responsive-img mb-2"/>
+            <form action="users/upload/remove" method="post">
+              <input type="hidden" name="id" value="<%= photo.id %>"/>
+              <input type="hidden" name="image" value="<%= photo.name %>"/>
+              <button type="submit" class="btn btn-danger ">Delete</button>
+            </form>
+          </div>
+            <% }) %>
          <% } %>
         </div>
         

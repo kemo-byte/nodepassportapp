@@ -1,6 +1,7 @@
 const multer = require('multer')
 const path = require('path')
 const uploadModel = require('../models/Upload')
+var fs = require('fs');
 
 // Set Storage Engine 
 const storage = multer.diskStorage({
@@ -61,7 +62,23 @@ const uploadImage = (req, res)=>{
       }
     })
   }
+const removeImage =  (req,res) =>{
+  const {id, image} = req.body
+  fs.unlink(`./public/uploads/${image}`, async(err) =>{
+    if (err) throw err;
+    try{
+     await uploadModel.deleteOne({ _id: id })
+    console.log('File deleted!');
+    req.flash('success_msg', 'File Delted Successfully!');
+    return res.redirect('/dashboard')
+    } catch(err) {
+      console.log(err);
+    }
+  });
 
+  
+}
   module.exports  = {
-    uploadImage
+    uploadImage,
+    removeImage
   }
