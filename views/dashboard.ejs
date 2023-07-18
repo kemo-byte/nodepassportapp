@@ -1,13 +1,11 @@
 
 <body>
-  <% if(typeof errors != 'undefined') {%>
-    <% errors.forEach((error) =>{%>
-      <script> alertify.error('<%= error.msg %>')</script>
-      <% })%>
-<% } %> 
+  <% if(success_msg != ''){ %>
+    <script>alertify.success('<%= success_msg %>')</script>
+  <% } %>
 
-<% if(success_msg != ''){ %>
-  <script>alertify.success('<%= msg %>')</script>
+<% if(error_msg != ''){ %>
+  <script>alertify.error('<%= error_msg %>')</script>
 <% } %>
     <main>
       <div class="container">
@@ -37,7 +35,7 @@
           <% if( typeof photos != 'undefined') {  %>
             <% photos.forEach((photo) =>{%>
 
-            <img src="/uploads/<%= typeof photo.name != 'undefined' ? photo.name :''%>" width="400" height="400" class="responsive-img float-right"/>
+            <img src="/uploads/<%= typeof photo.name != 'undefined' ? photo.name :''%>"  height="300" class="responsive-img float-right mb-2"/>
          <% }) %>
          <% } %>
         </div>

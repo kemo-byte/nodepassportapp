@@ -41,29 +41,22 @@ const uploadImage = (req, res)=>{
     upload(req, res, async (err)=>{
       if(err) {
         errors.push({msg:err})
-        res.render('dashboard',{
-          errors
-        })
+        req.flash('error_msg', `${errors[0]['msg']}`);
+        return res.redirect('/dashboard')
       } else {
         if(req.file == undefined) {
-          errors.push({msg:"Error: No File Selected!"})
-        res.render('dashboard',{
-          errors
-        })
+          errors.push({msg:"No File Selected!"})
+          req.flash('error_msg', `${errors[0]['msg']}`);
+        return res.redirect('/dashboard')
         } else {
 
           await uploadModel.create({
             name:req.file.filename,
             user:req.user.id
         })
-        let query= {user:req.user.id},
-       photos = await uploadModel.find(query).sort({_id:-1})
-          res.render('dashboard',{
-            msg:"File Uploaded!",
-            file: `/uploads/${req.file.filename}`,
-            photos:photos,
-            user:req.user
-          })
+       req.flash('success_msg', 'File Uploaded Successfully!');
+        return res.redirect('/dashboard')
+          
         }
       }
     })
