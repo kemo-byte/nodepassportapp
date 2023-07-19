@@ -1,0 +1,49 @@
+
+<body>
+    <% if(success_msg != ''){ %>
+      <script>alertify.success('<%= success_msg %>')</script>
+    <% } %>
+  
+  <% if(error_msg != ''){ %>
+    <script>alertify.error('<%= error_msg %>')</script>
+  <% } %>
+      <main>
+        <div class="container">
+  
+          <section class="section error-404 min-vh-100 d-flex flex-column align-items-center justify-content-center">
+            <h1>show</h1>
+
+            <a class="btn btn1" href="/dashboard">Back to Album</a>
+  
+    
+            
+          <div class="row mt-3">
+            <% if( typeof photo != '') {  %>
+              <div class="col-12 text-center">
+              <img src="/uploads/<%= typeof photo != 'undefined' ? photo[0].name :''%>" style="max-width:100%;" class="responsive-img mb-2"/>
+              <form action="users/upload/remove" method="post">
+                <input type="hidden" name="id" value="<%= photo[0].id %>"/>
+                <input type="hidden" name="image" value="<%= photo[0].name %>"/>
+                <button type="submit" class="btn btn-danger ">Delete</button>
+              </form>
+            </div>
+           <% } %>
+          </div>
+          
+            <img src="/assets/img/not-found.svg" class="img-fluid py-5" alt="Page Not Found">
+            <div class="credits">
+              <!-- All the links in the footer should remain intact. -->
+              <!-- You can delete the links only if you purchased the pro version. -->
+              <!-- Licensing information: https://bootstrapmade.com/license/ -->
+              <!-- Purchase the pro version with working PHP/AJAX contact form: https://bootstrapmade.com/nice-admin-bootstrap-admin-html-template/ -->
+              Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
+            </div>
+          </section>
+    
+        </div>
+      </main><!-- End #main -->
+    
+      <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+    
+  
+    </body>

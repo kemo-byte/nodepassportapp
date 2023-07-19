@@ -11,7 +11,7 @@
       <div class="container">
 
         <section class="section error-404 min-vh-100 d-flex flex-column align-items-center justify-content-center">
-          <h1>Dashboard</h1>
+          <h1>The Album</h1>
           <% if(typeof user != 'undefined') {%>
           <h2>Welcome <%= user.name %></h2>
           <%}%>
@@ -35,12 +35,9 @@
           <% if( typeof photos != 'undefined') {  %>
             <% photos.forEach((photo) =>{%>
             <div class="col-6">
-            <img src="/uploads/<%= typeof photo.name != 'undefined' ? photo.name :''%>" style="width:100%;" class="responsive-img mb-2"/>
-            <form action="users/upload/remove" method="post">
-              <input type="hidden" name="id" value="<%= photo.id %>"/>
-              <input type="hidden" name="image" value="<%= photo.name %>"/>
-              <button type="submit" class="btn btn-danger ">Delete</button>
-            </form>
+              <a href="/show?id=<%= photo.id%>" style="display:block  !important; width:100% !important">
+                <img src="/uploads/<%= typeof photo.name != 'undefined' ? photo.name :''%>" style="max-width:100% !important; height: 500px;" class="responsive-img mb-2"/>
+              </a>
           </div>
             <% }) %>
          <% } %>
