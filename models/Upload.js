@@ -1,19 +1,20 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 
-const userSchema = new mongoose.Schema({
-    user:{
-        type:mongoose.Schema.Types.ObjectId,
-        required: true,
-        ref:'User'
+const userSchema = new mongoose.Schema(
+  {
+    user: {
+      type: mongoose.Schema.Types.ObjectId,
+      required: true,
+      ref: 'User',
     },
-    name:{
-        type: String,
-        required:[true,'Plase add file name']
-    }
-    
-    
-},{timestamps:true})
+    name: {
+      type: String,
+      required: [true, 'Plase add file name'],
+    },
+  },
+  { timestamps: true },
+);
 
-const Upload = mongoose.model('Upload',userSchema)
+const Upload = mongoose.model('Upload', userSchema);
 
-module.exports = Upload
+module.exports = Upload;
