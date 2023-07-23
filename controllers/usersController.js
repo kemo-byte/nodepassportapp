@@ -16,14 +16,14 @@ const loginUser = (req, res) => {
 // @route POST /users/login
 // @access Public
 const handleLoginUser = (req, res, next) => {
-  passport.authenticate('local', (user) => {
+  passport.authenticate('local', (err, user) => {
     if (!user) {
       // Handle authentication failure
       req.flash('error', 'Invalid username or password');
       return res.redirect('/users/login');
     }
 
-    return req.logIn(user, async (err) => {
+    return req.logIn(user, async () => {
       if (err) {
         // Handle error
         return next(err);
